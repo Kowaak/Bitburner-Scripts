@@ -1,6 +1,6 @@
 /** @param {NS} ns */
 export async function main(ns) {
-  // Konfiguracja logów i otwarcie dedykowanego okna skryptu
+  // Config and the window
   ns.disableLog("ALL");
   ns.ui.openTail(); 
   ns.ui.resizeTail(820, 450); 
@@ -12,7 +12,7 @@ export async function main(ns) {
     let budget = ns.getServerMoneyAvailable("home");
     let numNodes = ns.hacknet.numNodes();
     
-    // Rysowanie tabeli w oknie logów
+    // Drawing the table
     ns.clearLog();
     ns.print("=======================================================================");
     ns.print(` Liczba węzłów: ${numNodes} / ${TARGET_NODES}`);
@@ -30,18 +30,17 @@ export async function main(ns) {
     ns.print("=======================================================================");
 
 
-    // LOGIKA DECYZYJNA:
     let bestOption = null;
     let lowestCost = Infinity;
 
-    // 1. Priorytet: Kupuj nowe węzły aż do osiągnięcia limitu 23
+    // Buying nodes up to the limit of 23
     if (numNodes < TARGET_NODES) {
       let purchaseCost = ns.hacknet.getPurchaseNodeCost();
       if (purchaseCost < budget) {
         bestOption = { type: "purchase", cost: purchaseCost };
       }
     } 
-    // 2. Jeśli mamy już 23 węzły, szukaj najtańszego ulepszenia istniejących
+    //When you have 23 nodes look for the cheapest upgrade ...
     else {
       for (let i = 0; i < numNodes; i++) {
         let lvlCost = ns.hacknet.getLevelUpgradeCost(i, 1);
@@ -64,7 +63,7 @@ export async function main(ns) {
       }
     }
 
-    // WYKONANIE AKCJI:
+    // .. and buy it
     if (bestOption) {
       if (bestOption.type === "purchase") {
         ns.hacknet.purchaseNode();
@@ -76,10 +75,10 @@ export async function main(ns) {
         ns.hacknet.upgradeCore(bestOption.node, 1);
       }
       
-      // antylag
+      // antilag
       await ns.sleep(100);
     } else {
-      // jeśli nic nie można kupić, czekaj
+      // if you cant buy, wait for a second
       await ns.sleep(1000);
     }
   }

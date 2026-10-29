@@ -16,12 +16,12 @@ export function getAvailableMethods(ns) {
 export function acquireRootAccess(ns, target) {
   if (!ns.hasRootAccess(target)) {
     if (ns.getHackingLevel() < ns.getServerRequiredHackingLevel(target)) {
-      ns.print(`ERROR: Za niski poziom ${target}`)
+      ns.print(`ERROR: Level to low for ${target}`)
       return false
   }
     const methods = getAvailableMethods(ns);
     if (methods.length < ns.getServerNumPortsRequired(target)) {
-      ns.print(`ERROR: Niewystarczajaca ilość metod włamania ${target}`)
+      ns.print(`ERROR: Not enough port openings for ${target}`)
       return false
     }
     for (const method of methods) {

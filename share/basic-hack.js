@@ -2,12 +2,13 @@
 export async function main(ns) {
 
 
-    //dwie opcje, albo hakować sam siebie albo jakiś jeden określony server
-    
+    //Two options
+    //Hack a single predetermined server
     const target = "";
+    //or hack the server the script is hosted on
     //const target = ns.getHostname(); 
     
-    // Zabezpieczenie: nie hakuj mnie
+    // Safety dont hack home
     if (target === "home" || target.startsWith("pserv")) {
         return;
     }

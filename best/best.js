@@ -1,4 +1,7 @@
 import { buildNetwork, networkToServerList, disableLogs } from './utils.js'
+
+//redundant
+
 export async function main(ns) {
   disableLogs(ns);
 

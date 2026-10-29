@@ -13,9 +13,8 @@ export async function main(ns) {
         scanned.add(server);
         queue.push(server);
 
-        // Pomijaj własne wykupione serwery
+        // Skip player owned servers
         if (server.startsWith("pserv")) continue;
-
         await nukeServer(ns, server);
       }
     }
@@ -51,9 +50,9 @@ async function nukeServer(ns, target) {
 
   if (portsOpened >= portsNeeded) {
     ns.nuke(target);
-    ns.tprint(`[SUKCES] Uzyskano dostęp root do: ${target}`);
-    // ns.installBackdoor()  potrzeba singularity????
+    ns.tprint(`[SUCCES] Gained root access to: ${target}`);
+    // ns.installBackdoor()  singularity needed
   } else {
-    ns.print(`[POMINIĘTO] Za mało programów dla ${target} (wymaga ${portsNeeded}, otwarto ${portsOpened})`);
+    ns.print(`[SKIPPED] Not enough programs for: ${target} (needed ${portsNeeded}, opened ${portsOpened})`);
   }
 }

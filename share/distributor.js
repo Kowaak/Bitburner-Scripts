@@ -1,4 +1,4 @@
-//Wszytkie serwery do listy
+//List of all the servers
 function getAllServers(ns) {
     let serverList = [];
     let queue = ["home"];
@@ -35,7 +35,7 @@ export async function main(ns) {
 
         let isPlayerServer = (server === "home" || server.startsWith("pserv") || ns.getServer(server).purchasedByPlayer);
         
-        // Zabezpieczenie: Jeśli serwer ma 0 max pieniędzy, pomiń go
+        // Safety: If the server has 0 max money, skip it
         if (!isPlayerServer && ns.getServerMaxMoney(server) === 0) continue;
 
         let activeScript = isPlayerServer ? shareScript : hackScript;
@@ -56,9 +56,9 @@ export async function main(ns) {
         let threads = Math.floor(availableRam / scriptRam);
         if (threads > 0) {
             ns.exec(activeScript, server, threads);
-            ns.tprint(`Uruchomiono na ${server} z ${threads} wątkami.`);
+            ns.tprint(`Launched on ${server} with ${threads} threads.`);
         }else {
-            ns.tprint(`Pominięto ${server}: za mało wolnego RAM-u`);
+            ns.tprint(`Skipped ${server}: not enough RAM`);
         }
     }
 }
